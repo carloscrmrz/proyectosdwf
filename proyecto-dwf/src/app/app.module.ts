@@ -7,7 +7,11 @@ import { FooterComponent } from './modules/layout/component/footer/footer.compon
 import { NavComponent } from './modules/layout/component/nav/nav.component';
 import { HeaderComponent } from './modules/layout/component/header/header.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ProductModule } from './modules/product/product.module';
+import { LayoutModule } from './modules/layout/layout.module';
+import { HttpClientModule } from '@angular/common/http';
+import * as $ from "jquery"
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,7 +22,12 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule
+    HttpClientModule,
+    NgbModule,
+    BrowserAnimationsModule,
+    ProductModule,
+    LayoutModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]
