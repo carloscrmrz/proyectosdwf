@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApisURI } from 'src/app/shared/apis-uri';
+import { RFCTest } from 'src/app/shared/rfc-test';
 import { Cart } from '../_model/cart';
 
 @Injectable({
@@ -9,6 +10,7 @@ import { Cart } from '../_model/cart';
 export class CartService {
 
   private apiURI = ApisURI.dwf20221apiURI;
+  private rfc    = RFCTest.dwfRFCtest;
 
   constructor(
     private http: HttpClient
@@ -23,10 +25,10 @@ export class CartService {
   }
 
   getCart(rfc: string) {
-    return this.http.get<Cart>(`${this.apiURI}/cart/${rfc}`);
+    return this.http.get<Cart>(`${this.apiURI}/cart/${this.rfc}`);
   }
 
   deleteCart(rfc: string) {
-    return this.http.delete(`${this.apiURI}/cart/clear/${rfc}`);
+    return this.http.delete(`${this.apiURI}/cart/clear/${this.rfc}`);
   }
 }
