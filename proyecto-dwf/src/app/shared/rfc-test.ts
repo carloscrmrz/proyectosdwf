@@ -1,3 +1,3 @@
 export class RFCTest {
-    public static dwfRFCtest: String = "SAIV920101A00";
+    public static dwfRFCtest: string = "SAIV920101A00";
 }
