@@ -5,11 +5,13 @@ import { CategoryComponent } from '../app/modules/product/component/category/cat
 import { CartComponent } from './modules/cart/component/cart/cart.component';
 import { CommonModule  } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { InvoiceComponent } from './modules/invoice/component/invoice/invoice.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'category', component: CategoryComponent},
-  { path: 'cart', component: CartComponent}
+  { path: 'cart', component: CartComponent},
+  { path: 'invoice', component: InvoiceComponent}
 ];
 
 @NgModule({

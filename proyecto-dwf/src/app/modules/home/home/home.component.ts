@@ -1,11 +1,20 @@
+/* Misc */
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
+
+import { RFCTest } from 'src/app/shared/rfc-test';
+
+import { CartService } from '../../cart/_service/cart.service';
+import { Product } from '../../product/_model/product';
 
 /* Variable para queries */
 declare var $: any;
 
 /* Mensajes para mostrar al usuario */
 import Swal from 'sweetalert2';
+import { ProductService } from '../../product/_service/product.service';
+import { Cart } from '../../cart/_model/cart';
+
 
 @Component({
   selector: 'app-home',
@@ -14,43 +23,64 @@ import Swal from 'sweetalert2';
 })
 export class HomeComponent implements OnInit {
 
-  /* Formulario para datos de pago con tarjeta */
-  formulario = this.formBuilder.group({
-    id_cart: [''],
-    id_customer: [''],
-    name: ['', Validators.required],
-    surname: ['', Validators.required],
-    address: ['', Validators.required],
-    mail: ['', Validators.required],
-    numero_tarjeta: ['', Validators.required],
-    numero_seguridad: ['', Validators.required]
-  });
-  submitted = false;
+  /* Variables para uso de Productos. */
+  products: Product[] = [];
+  product: Product = new Product();
+  cart: Cart = new Cart();
+
+  private rfcTest = RFCTest.dwfRFCtest;
+
+  
 
   constructor(
-    private formBuilder: FormBuilder
-  ) { }
+    private formBuilder: FormBuilder,
+    private cartService: CartService,
+    private productService: ProductService,
+  ) {
+    this.cart.rfc = this.rfcTest;
+   }
 
   ngOnInit(): void {
+    this.getProducts();
   }
 
-  /* Método para el formulario de datos de pago */
-  onSubmitTarjeta(){
-    this.submitted = true;
-    this.createPago();
+  getProducts() {
+    this.productService.getRandomProducts().subscribe(
+      res => this.products = res,
+      err => console.log(err)
+    );
   }
 
-  /* Método prueba para que se muestre el modal,
-  ya que su funcionamiento entero va en otro
-  sprint */
-  createPago(){
-    $('#pago_modal').modal('show');
+  getProduct(gtin: string) {
+      this.productService.getProduct(gtin).subscribe(
+        res => this.product = res,
+        err => console.log(err)
+      )
   }
 
-  /* Cerrar el modal del pago */
-  closeModalPago(){
-    $('#pago_modal').modal('hide');
-    this.submitted = false;
-  }
 
+  // TODO: A veces deja agregar, a veces no. arreglar bug.
+  addToCart(id_product: number) {
+    this.cart.id_product = id_product;
+    this.cart.quantity = 1;
+    this.cartService.addToCart(this.cart).subscribe(
+     res => {
+        Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Producto añadido al carrito!',
+        showConfirmButton: false,
+        timer: 1500
+      })
+    },
+    err => {
+      console.log(err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'No se pudo agregar el producto al carrito',
+      })
+    }
+    )
+  }
 }
