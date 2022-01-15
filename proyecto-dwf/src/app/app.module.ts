@@ -8,6 +8,7 @@ import {HomeModule} from './modules/home/home.module';
 import { CartComponent } from './modules/cart/component/cart/cart.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { InvoiceModule } from './modules/invoice/invoice.module';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ProductModule,
     LayoutModule,
     HomeModule,
+    InvoiceModule,
     ReactiveFormsModule,
     FormsModule
   ],
