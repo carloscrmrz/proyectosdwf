@@ -9,7 +9,7 @@
         justify-content-center
       "
     >
-      <div class="col mb-5">
+      <div class="col mb-5" *ngFor="let product of products; let i=index">
         <div class="card h-100">
           <!-- Product image-->
           <img
@@ -24,308 +24,25 @@
           <div class="card-body p-4">
             <div class="text-center">
               <!-- Product name-->
-              <h5 class="fw-bolder">Sudadera deportiva</h5>
+              <h5 class="fw-bolder">{{ product.product }}</h5>
               <!-- Product price-->
-              $500.00
+              $ {{ product.price }}
             </div>
           </div>
           <!-- Product actions-->
           <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
             <div class="text-center">
               <a
-                class="btn btn-secondary mt-auto"
+                class="btn btn-primary mt-auto"
                 href="#"
-                onclick="selectProduct(1)"
-                >Ver más colores</a
+                (click)="addToCart(product.id_product)"
+                >Agregar al carrito</a
               >
             </div>
           </div>
         </div>
       </div>
-      <div class="col mb-5">
-        <div class="card h-100">
-          <!-- Sale badge-->
-          <div
-            class="badge bg-danger text-white position-absolute parpadea"
-            style="top: 0.5rem; right: 0.5rem"
-          >
-            Oferta
-          </div>
-          <!-- Product image-->
-          <img
-            class="card-img-top img-responsive"
-            src="assets/Imagenes temporales de productos/img_1639065693453.bmp"
-            alt="..."
-            width="350px"
-            height="280px"
-            style="object-fit: cover"
-          />
-          <!-- Product details-->
-          <div class="card-body p-4">
-            <div class="text-center">
-              <!-- Product name-->
-              <h5 class="fw-bolder">Macbook Pro 14"</h5>
-              <!-- Product reviews-->
-              <div
-                class="d-flex justify-content-center small text-warning mb-2"
-              >
-                <div class="bi-star-fill"></div>
-                <div class="bi-star-fill"></div>
-                <div class="bi-star-fill"></div>
-                <div class="bi-star-fill"></div>
-                <div class="bi-star-fill"></div>
-              </div>
-              <!-- Product price-->
-              <span class="text-muted text-decoration-line-through"
-                >$60,000</span
-              >
-              $52,999
-            </div>
-          </div>
-          <!-- Product actions-->
-          <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-            <div class="text-center">
-              <a
-                class="btn btn-secondary mt-auto"
-                href="#"
-                id="add1"
-                onclick="selectProduct(2)"
-                >Add to cart</a
-              >
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col mb-5">
-        <div class="card h-100">
-          <!-- Sale badge-->
-          <div
-            class="badge bg-danger text-white position-absolute parpadea"
-            style="top: 0.5rem; right: 0.5rem"
-          >
-            Oferta
-          </div>
-          <!-- Product image-->
-          <img
-            class="card-img-top"
-            src="assets/Imagenes temporales de productos/mochila.JPG"
-            alt="..."
-            width="350px"
-            height="280px"
-            style="object-fit: cover"
-          />
-          <!-- Product details-->
-          <div class="card-body p-4">
-            <div class="text-center">
-              <!-- Product name-->
-              <h5 class="fw-bolder">Mochila Star Wars</h5>
-              <!-- Product price-->
-              <span class="text-muted text-decoration-line-through"
-                >$500.00</span
-              >
-              $250.00
-            </div>
-          </div>
-          <!-- Product actions-->
-          <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-            <div class="text-center">
-              <a
-                class="btn btn-secondary mt-auto"
-                href="#"
-                onclick="selectProduct(3)"
-                >Add to cart</a
-              >
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col mb-5">
-        <div class="card h-100">
-          <!-- Product image-->
-          <img
-            class="card-img-top"
-            src="assets/Imagenes temporales de productos/tenis_nina.jpg"
-            alt="..."
-            width="350px"
-            height="280px"
-            style="object-fit: cover"
-          />
-          <!-- Product details-->
-          <div class="card-body p-4">
-            <div class="text-center">
-              <!-- Product name-->
-              <h5 class="fw-bolder">Tenis Glow Pink</h5>
-              <!-- Product reviews-->
-              <div
-                class="d-flex justify-content-center small text-warning mb-2"
-              >
-                <div class="bi-star-fill"></div>
-                <div class="bi-star-fill"></div>
-                <div class="bi-star-fill"></div>
-                <div class="bi-star-fill"></div>
-                <div class="bi-star-fill"></div>
-              </div>
-              <!-- Product price-->
-              $480.00
-            </div>
-          </div>
-          <!-- Product actions-->
-          <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-            <div class="text-center">
-              <a
-                class="btn btn-secondary mt-auto"
-                href="#"
-                onclick="selectProduct(4)"
-                >Add to cart</a
-              >
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Modal for prices -->
-
-      <div
-        class="modal fade"
-        id="price-modal"
-        tabindex="-1"
-        aria-labelledby="modal-title"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="modal-title">Carrito</h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">
-              <p>El total de su compra es: $0</p>
-            </div>
-            <div class="modal-footer">
-              <button
-                class="btn btn-secondary"
-                data-bs-target="#cancel-modal"
-                data-bs-toggle="modal"
-                data-bs-dismiss="modal"
-              >
-                Cancelar
-              </button>
-              <button
-                class="btn btn-primary"
-                data-bs-target="#confirm-modal"
-                data-bs-toggle="modal"
-                data-bs-dismiss="modal"
-              >
-                Confirmar
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Canceled purchase modal -->
-
-      <div class="modal fade" id="cancel-modal" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Compra Cancelada</h5>
-            </div>
-            <div class="modal-body">
-              <p>
-                Su compra ha sido cancelada y se irá a los confines del internet
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Succesful purchase modal -->
-
-      <div class="modal fade" id="confirm-modal" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Compra Realizada!</h5>
-            </div>
-            <div class="modal-body">
-              <p>
-                Tal parece que no te pedimos ningún medio para que nos pagues,
-                pero tu orden está completa, confía en mi.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-  <!-- Modal para registrar los datos de la tarjeta
-de crédito para hacer la compra -->
-<div class="modal" tabindex="1" role="dialog" id="pago_modal">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Datos de tarjeta</h5>
-        <button (click)="closeModalPago()" type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="formulario" (ngSubmit)="onSubmitTarjeta()">
-          <div class="form-group">
-            <label for="rate">Ingresa tu nombre <span class="text-danger">*</span></label>
-              <input type="text" class="form-control marginForm" id="name" formControlName="name" placeholder="Nombre">
-              
-          </div>
-          <div class="form-group">
-            <label for="rate">Ingresa tu apellido <span class="text-danger">*</span></label>
-              <input type="text" class="form-control marginForm" id="surname" formControlName="surname" placeholder="Apellido">
-              
-          </div>
-          <div class="form-group">
-            <label for="rate">Ingresa tu dirección<span class="text-danger">*</span></label>
-            <textarea rows="2" class="form-control marginForm" id="address" formControlName="address"></textarea>
-          </div>
-          <div class="form-group">
-            <label for="rate">Ingresa tu correo electrónico <span class="text-danger">*</span></label>
-              <input type="text" class="form-control marginForm" id="mail" formControlName="mail" placeholder="Correo">
-             
-          </div>
-          <div class="form-group">
-            <label for="rate">Ingresa el número de tu tarjeta <span class="text-danger">*</span></label>
-              <input type="text" class="form-control marginForm" id="numero_tarjeta" formControlName="numero_tarjeta" placeholder="Número de tarjeta">
-              
-          </div>
-          <div class="form-group">
-            <label for="rate">Ingresa los números de seguridad <span class="text-danger">*</span></label>
-              <input type="text" class="form-control marginForm" id="numero_seguridad" formControlName="numero_seguridad" placeholder="Números de seguridad">
-              
-          </div>
-          <div>
-            <br>
-            <p class="text-right"><span class="text-danger">*</span>Campos obligatorios</p>
-            <button type="submit" class="btn btn-success btn-block">Pagar</button>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button (click)="closeModalPago()" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-      </div>
-    </div>
-  </div>
-</div> 
-
- <!-- Botón para probar la vista del modal de
-      pago con tarjeta -->
-      <h3>Prueba de modal para pago con tarjeta de crédito &nbsp;&nbsp;
-        <button (click)="createPago()" style="float: right;" type="button" class="btn btn-primary">
-        Pagar</button>
-      </h3>
-
+      
       <!-- Bootstrap core JS-->
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
     </div>
