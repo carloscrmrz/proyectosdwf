@@ -80,9 +80,7 @@ export class CartComponent implements OnInit {
   }
 
   /* Not used in this module, but added for completeness */
-  addToCart() {
-    this.cartService.addToCart(this.productCart);
-  }
+  addToCart() { }
   /* Not used in this module, but added for completeness */
 
   removeFromCart(id_cart: number) {
