@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApisURI } from 'src/app/shared/apis-uri';
 import { RFCTest } from 'src/app/shared/rfc-test';
+import { CartSend } from '../../home/home/_model/cartsend';
 import { Cart } from '../_model/cart';
 
 @Injectable({
@@ -15,7 +16,7 @@ export class CartService {
     private http: HttpClient
   ) { }
 
-  addToCart(cart: Cart) {
+  addToCart(cart: CartSend) {
     return this.http.post(`${this.apiURI}/cart`, cart);
   }
 

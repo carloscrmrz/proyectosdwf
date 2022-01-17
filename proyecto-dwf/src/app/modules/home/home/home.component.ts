@@ -12,8 +12,10 @@ declare var $: any;
 
 /* Mensajes para mostrar al usuario */
 import Swal from 'sweetalert2';
+
 import { ProductService } from '../../product/_service/product.service';
-import { Cart } from '../../cart/_model/cart';
+import { CartSend } from './_model/cartsend';
+
 
 
 @Component({
@@ -26,7 +28,7 @@ export class HomeComponent implements OnInit {
   /* Variables para uso de Productos. */
   products: Product[] = [];
   product: Product = new Product();
-  cart: Cart = new Cart();
+  cart: CartSend = new CartSend();
 
   private rfcTest = RFCTest.dwfRFCtest;
 
