@@ -67,7 +67,9 @@ export class HomeComponent implements OnInit {
 
   getProduct(gtin: string) {
       this.productService.getProduct(gtin).subscribe(
-        res => this.product = res,
+        res => { this.product = res;
+                  console.log(this.product)
+        },
         err => console.log(err)
       )
   }
@@ -82,21 +84,23 @@ export class HomeComponent implements OnInit {
 
   addToCart(id_product: number) {
     this.cart.id_product = id_product;
-    this.product = this.getProductByID(id_product);
     this.cart.quantity = 1;
-
-    /* Verifies if the number of selected product is less or
-     * equals than the stock of the product.
-     */
-    if ( !this.isValidQuantity(this.cart) ) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error!',
-        text: 'No tenemos tanto stock...',
-      });
-      return; // If is not valid we exit the method.
-    }
-
+    this.productService.getProduct(this.getProductByID(id_product).gtin).subscribe(
+      res => { 
+        /* Verifies if the number of selected product is less or
+         * equals than the stock of the product.
+         */
+        if ( !this.isValidQuantity(this.cart) ) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error!',
+          text: 'No tenemos tanto stock...',
+        });
+        return; // If is not valid we exit the method.
+      }},
+      err => console.log()
+    );
+    
     this.cartService.addToCart(this.cart).subscribe(
      res => {
         Swal.fire({
