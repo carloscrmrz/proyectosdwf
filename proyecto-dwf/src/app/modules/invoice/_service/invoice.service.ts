@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApisURI } from 'src/app/shared/apis-uri';
 import { Invoice } from '../_model/invoice';
+import { InvoiceDetail } from '../_model/invoice-detail';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,6 @@ export class InvoiceService {
   }
 
   getItems(id_invoice: number) {
-    return this.http.get(`${this.apiURI}/invoice/${id_invoice}`);
+    return this.http.get<InvoiceDetail[]>(`${this.apiURI}/invoice/item/${id_invoice}`);
   }
 }
