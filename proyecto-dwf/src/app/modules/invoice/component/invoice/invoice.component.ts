@@ -39,7 +39,7 @@ export class InvoiceComponent implements OnInit {
   }
 
   getDetail(id_invoice: number){
-    this.router.navigate([`${this.apiURI}/${id_invoice}`]);
+    this.router.navigate([`invoice-detail/${id_invoice}`]);
   }
 
 }
