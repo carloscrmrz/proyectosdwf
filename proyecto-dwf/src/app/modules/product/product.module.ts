@@ -17,7 +17,7 @@ import { NgxPhotoEditorModule } from "ngx-photo-editor";
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxPhotoEditorModule
+    NgxPhotoEditorModule,
   ],
   exports: [
     CategoryComponent,

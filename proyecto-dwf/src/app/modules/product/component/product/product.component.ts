@@ -154,7 +154,7 @@ export class ProductComponent implements OnInit {
     )
   }
 
-  // Redireccionar a detalle del producto --------------------------------------------------
+  // Redireccionar a detalle del producto copia --------------------------------------------------
 
   productDetail(gtin: string){
     this.router.navigate(['product-detail/'+gtin]);
