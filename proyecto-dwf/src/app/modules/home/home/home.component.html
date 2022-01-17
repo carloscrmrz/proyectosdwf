@@ -33,16 +33,15 @@
                 (click)="addToCart(product.id_product)"
                 >Agregar al carrito</a
               >
+              <a
+                (click)="productDetail(product.gtin)"
+                type="button"
+                class="btn btn-secondary mt-3"
+              >
+                Ver Detalle
+              </a>
             </div>
           </div>
-          <button
-            (click)="productDetail(product.gtin)"
-            type="button"
-            class="btn btn-secondary btn-sm"
-          >
-            Ver Detalle
-            <i class="fas fa-gift"></i>
-          </button>
         </div>
       </div>
 
