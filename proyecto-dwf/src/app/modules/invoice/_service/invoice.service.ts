@@ -24,6 +24,6 @@ export class InvoiceService {
   }
 
   getItems(id_invoice: number) {
-    return this.http.get(`${this.apiURI}/invoice/${id_invoice}`);
+    return this.http.get(`${this.apiURI}/invoice/item/${id_invoice}`);
   }
 }
