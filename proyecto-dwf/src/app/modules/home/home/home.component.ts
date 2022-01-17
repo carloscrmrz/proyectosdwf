@@ -33,6 +33,7 @@ export class HomeComponent implements OnInit {
   cart: CartSend = new CartSend();
 
   private rfcTest = RFCTest.dwfRFCtest;
+  completeProdList: Product[] = [];
 
   
 
@@ -51,7 +52,15 @@ export class HomeComponent implements OnInit {
 
   getProducts() {
     this.productService.getRandomProducts().subscribe(
-      res => this.products = res,
+      res => {this.products = res
+      for ( let prod in this.products ) {
+        this.productService.getProduct(this.products[prod].gtin).subscribe(
+          res => this.completeProdList.push(res),
+          err => console.log(err)
+        );
+      }
+      console.log(this.completeProdList)
+    },
       err => console.log(err)
     );
   }
@@ -63,9 +72,31 @@ export class HomeComponent implements OnInit {
       )
   }
 
+  getProductByID(id_product: number): Product {
+      return this.products.filter((product) => product.id_product == id_product)[0];
+  }
+
+  isValidQuantity(cart: CartSend): boolean {
+    return this.product.stock >= cart.quantity;
+  }
+
   addToCart(id_product: number) {
     this.cart.id_product = id_product;
+    this.product = this.getProductByID(id_product);
     this.cart.quantity = 1;
+
+    /* Verifies if the number of selected product is less or
+     * equals than the stock of the product.
+     */
+    if ( !this.isValidQuantity(this.cart) ) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'No tenemos tanto stock...',
+      });
+      return; // If is not valid we exit the method.
+    }
+
     this.cartService.addToCart(this.cart).subscribe(
      res => {
         Swal.fire({
