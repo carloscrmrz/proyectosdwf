@@ -14,7 +14,9 @@ declare var $: any;
 import Swal from 'sweetalert2';
 
 import { ProductService } from '../../product/_service/product.service';
+
 import { CartSend } from './_model/cartsend';
+import { Router } from '@angular/router';
 
 
 
@@ -38,6 +40,7 @@ export class HomeComponent implements OnInit {
     private formBuilder: FormBuilder,
     private cartService: CartService,
     private productService: ProductService,
+    private router: Router
   ) {
     this.cart.rfc = this.rfcTest;
    }
@@ -60,8 +63,6 @@ export class HomeComponent implements OnInit {
       )
   }
 
-
-  // TODO: A veces deja agregar, a veces no. arreglar bug.
   addToCart(id_product: number) {
     this.cart.id_product = id_product;
     this.cart.quantity = 1;
@@ -85,4 +86,12 @@ export class HomeComponent implements OnInit {
     }
     )
   }
+  
+  // Redireccionar a detalle del producto --------------------------------------------------
+
+  productDetail(gtin: string){
+    this.router.navigate(['product-detail/'+gtin]);
+  }
+
 }
+
