@@ -14,6 +14,7 @@ declare var $: any;
 import Swal from 'sweetalert2';
 import { ProductService } from '../../product/_service/product.service';
 import { Cart } from '../../cart/_model/cart';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -36,6 +37,7 @@ export class HomeComponent implements OnInit {
     private formBuilder: FormBuilder,
     private cartService: CartService,
     private productService: ProductService,
+    private router: Router
   ) {
     this.cart.rfc = this.rfcTest;
    }
@@ -83,4 +85,12 @@ export class HomeComponent implements OnInit {
     }
     )
   }
+  
+  // Redireccionar a detalle del producto --------------------------------------------------
+
+  productDetail(gtin: string){
+    this.router.navigate(['product-detail/'+gtin]);
+  }
+
 }
+
