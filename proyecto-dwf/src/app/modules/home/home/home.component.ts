@@ -68,7 +68,6 @@ export class HomeComponent implements OnInit {
   getProduct(gtin: string) {
       this.productService.getProduct(gtin).subscribe(
         res => { this.product = res;
-                  console.log(this.product)
         },
         err => console.log(err)
       )
@@ -86,42 +85,49 @@ export class HomeComponent implements OnInit {
     this.cart.id_product = id_product;
     this.cart.quantity = 1;
     this.productService.getProduct(this.getProductByID(id_product).gtin).subscribe(
-      res => { 
-        /* Verifies if the number of selected product is less or
-         * equals than the stock of the product.
-         */
-        if ( !this.isValidQuantity(this.cart) ) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error!',
-          text: 'No tenemos tanto stock...',
-        });
-        return; // If is not valid we exit the method.
-      }},
+      res => { this.product = res;
+               this.handleCart(this.cart)
+      },
       err => console.log()
     );
     
-    this.cartService.addToCart(this.cart).subscribe(
-     res => {
-        Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: 'Producto añadido al carrito!',
-        showConfirmButton: false,
-        timer: 1500
-      })
-    },
-    err => {
-      console.log(err);
+    
+  }
+  
+  handleCart(cart: CartSend) {
+    /* Verifies if the number of selected product is less or
+     * equals than the stock of the product.
+     */
+
+    if ( !this.isValidQuantity(cart) ) {
       Swal.fire({
         icon: 'error',
         title: 'Error!',
-        text: 'No se pudo agregar el producto al carrito',
-      })
+        text: 'No tenemos tanto stock...',
+      });
+      return; // If is not valid we exit the method.
     }
-    )
+    this.cartService.addToCart(cart).subscribe(
+      res => {
+         Swal.fire({
+         position: 'top-end',
+         icon: 'success',
+         title: 'Producto añadido al carrito!',
+         showConfirmButton: false,
+         timer: 1500
+       })
+     },
+     err => {
+       console.log(err);
+       Swal.fire({
+         icon: 'error',
+         title: 'Error!',
+         text: 'No se pudo agregar el producto al carrito',
+       })
+     }
+     )
+
   }
-  
   // Redireccionar a detalle del producto --------------------------------------------------
 
   productDetail(gtin: string){
