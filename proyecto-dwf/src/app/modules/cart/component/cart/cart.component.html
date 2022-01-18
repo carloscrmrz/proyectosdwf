@@ -6,7 +6,7 @@
     <div class="card">
         <div class="card-header">
             <h3>
-                <div style="padding-left: 2rem;">Carrito</div>
+                <div style="padding-left: 2rem;"><i class="fas fa-shopping-cart"></i>&nbsp;&nbsp;Carrito</div>
             </h3>
         </div>
         <div class="card-body">
@@ -46,7 +46,8 @@
             </div>
         </div>
         <div class="card-footer">
-            <button (click)="createPago()" style="float: right;" type="button" class="btn btn-primary">Pagar</button>
+            <button (click)="createPago()" style="float: right;" type="button" class="btn btn-primary">
+                <i class="fas fa-money-bill"></i>&nbsp;&nbsp;Pagar</button>
         </div>
     </div>
 </div>
@@ -67,7 +68,6 @@
                         <label for="rate">Ingresa tu nombre <span class="text-danger">*</span></label>
                         <input type="text" class="form-control marginForm" id="name" formControlName="name"
                             placeholder="Nombre">
-
                     </div>
                     <div class="form-group">
                         <label for="rate">Ingresa tu apellido <span class="text-danger">*</span></label>
@@ -90,13 +90,17 @@
                         <label for="rate">Ingresa el número de tu tarjeta <span class="text-danger">*</span></label>
                         <input type="text" class="form-control marginForm" id="numero_tarjeta"
                             formControlName="numero_tarjeta" placeholder="Número de tarjeta">
-
+                        <div *ngIf="['submitted'] && numero_tarjeta.length != 16">
+                            <span class="tex-danger">La tarjeta debe contener 16 dígitos</span>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="rate">Ingresa los números de seguridad <span class="text-danger">*</span></label>
                         <input type="text" class="form-control marginForm" id="numero_seguridad"
                             formControlName="numero_seguridad" placeholder="Números de seguridad">
-
+                            <div *ngIf="['submitted'] && numero_seguridad.length != 3">
+                                <span class="tex-danger">El número debe ser de 3 dígitos</span>
+                            </div>
                     </div>
                     <div>
                         <br>
