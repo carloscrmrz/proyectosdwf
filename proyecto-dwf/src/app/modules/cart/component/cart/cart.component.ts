@@ -6,11 +6,14 @@ import { Router } from '@angular/router';
 /* API Utilization */
 import { Cart } from '../../_model/cart';
 import { CartService } from '../../_service/cart.service';
+import {Invoice} from '../../../invoice/_model/invoice';
+import {InvoiceService} from '../../../invoice/_service/invoice.service';
 import { ProductImage } from 'src/app/modules/product/_model/productImage';
 import { ProductImageService } from 'src/app/modules/product/_service/product-image.service';
 
 /* Testing RFC */
 import { RFCTest } from 'src/app/shared/rfc-test';
+import Swal from 'sweetalert2';
 
 /* JQuery */
 declare var $: any;
@@ -21,6 +24,13 @@ declare var $: any;
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
+
+  name: string = "";
+  surname: string = "";
+  address: string = "";
+  mail: string = "";
+  numero_tarjeta: string = "";
+  numero_seguridad: string = "";
 
   /* Variables para pago */
   formulario = this.formBuilder.group({
@@ -44,10 +54,13 @@ export class CartComponent implements OnInit {
   images: ProductImage[] = [];
   image: ProductImage[] = [];
 
+  invoiceList: Invoice[] = [];
+
 
   constructor(
     private cartService: CartService,
     private product_image_service: ProductImageService,
+    private invoiceService: InvoiceService,
     private formBuilder: FormBuilder,
     private router: Router
   ) { }
@@ -113,12 +126,48 @@ export class CartComponent implements OnInit {
   /* Método para el formulario de datos de pago */
   onSubmitTarjeta() {
     this.submitted = true;
-    this.createPago();
+    if(this.formulario.invalid){
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'Faltan campos por llenar',
+      })
+      return;
+    }
+    this.purchase();
+    this.deleteCart();
+    this.closeModalPago();
   }
 
-  /* Método prueba para que se muestre el modal,
-  ya que su funcionamiento entero va en otro
-  sprint */
+  purchase(){
+    this.invoiceService.purchase(this.rfcTest).subscribe(
+      res => {
+        console.log(res),
+        this.router.navigate(['invoice/']);
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Compra exitosa',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      },
+      err => {
+        console.log(err)
+        Swal.fire({
+          icon: 'error',
+          title: 'Error!',
+          text: 'No se pudo realizar la compra'
+        })
+      }
+    )
+  }
+
+  get f() {
+    return this.formulario.controls;
+  }
+
+  /* Se muestra el modal de pago */
   createPago() {
     $('#pago_modal').modal('show');
   }
