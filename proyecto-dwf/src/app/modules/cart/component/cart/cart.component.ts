@@ -169,6 +169,7 @@ export class CartComponent implements OnInit {
 
   /* Se muestra el modal de pago */
   createPago() {
+    this.formulario.reset();
     $('#pago_modal').modal('show');
   }
 
